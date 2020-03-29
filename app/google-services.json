@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "84461366288",
+    "firebase_url": "https://archerygame-9e23b.firebaseio.com",
+    "project_id": "archerygame-9e23b",
+    "storage_bucket": "archerygame-9e23b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84461366288:android:11bcb0b369838d39f46e95",
+        "android_client_info": {
+          "package_name": "com.example.archerygame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84461366288-p4e3i519qrtop0dei4l3ptcmkdru3vaq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.archerygame",
+            "certificate_hash": "908c8ec6de52777ee6c8dccb1618947988e2c66b"
+          }
+        },
+        {
+          "client_id": "84461366288-q18rbfo08q5lqoarnr1cthjusgvs6o73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyS-BAh8K1XiJ6rLwtlfrDTwmxE_Mc0qw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84461366288-q18rbfo08q5lqoarnr1cthjusgvs6o73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
