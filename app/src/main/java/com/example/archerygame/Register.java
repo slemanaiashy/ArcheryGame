@@ -47,7 +47,7 @@ public class Register extends Activity {
                             if(!player.getPassword().isEmpty()) {
                                 System.out.println(Password.getText().toString());
                                 PlayerInfo.child(player.getUsername()).setValue(player);
-                                Intent s = new Intent(getApplicationContext(), StartGame.class);
+                                Intent s = new Intent(getApplicationContext(), Instructions.class);
                                 s.putExtra("login", false);
                                 s.putExtra("password", player.getPassword());
                                 s.putExtra("email", player.getEmail());
@@ -75,6 +75,7 @@ public class Register extends Activity {
             public void onClick(View view) {
                 Intent Z = new Intent(getApplicationContext(),Login.class);
                 Z.putExtra("check",true);
+                Z.putExtra("prize",false);
                 startActivity(Z);
             }
         });

@@ -81,8 +81,10 @@ public class GameView extends View {
         else
         if (!(Xtouch > 0 && Xtouch < 105*fx && Ytouch > 0 && Ytouch < 106*fy)&&!settingpress&&!isShop&&gamemodedone&&!midair&&!isHighscores&&finishgame) {
             T++;
+            System.out.println("zxcsa");
         }
         else {
+            System.out.println("asdfa "+finishgame+" "+!midair+" "+gamemodedone+" "+!settingpress+" "+!isShop+" "+!isHighscores);
             if(!isShop&&gamemodedone&&!midair&&finishgame){
                 settingpress = true;
                 if(Xtouch>900*fx&&Xtouch<980*fx&&Ytouch>32*fy&&Ytouch<112*fy){
@@ -97,7 +99,7 @@ public class GameView extends View {
                     se=!se;
                     updateSE(player.getUsername(),se);
                 }
-                if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&&Ytouch>(height) * fy / 8+450*fy&&Ytouch<(height) * fy / 8+550*fy){
+                if(Xtouch>(width)* fx/ 2-200*fx&&Xtouch<(width)* fx/ 2+180*fx&&Ytouch>(height) * fy / 8+450*fy&&Ytouch<(height) * fy / 8+550*fy){
                     isHighscores=true;
                 }
             }
@@ -133,7 +135,7 @@ public class GameView extends View {
                         heartnum = 1;
 
                 }
-
+                T=1;
                 score = 0;
                 done = true ;
                 restart();
@@ -183,21 +185,28 @@ public class GameView extends View {
                 if(arrownum!=0)
                     arrownum--;
         }
-        if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&&Ytouch>(height) * fy / 8&&Ytouch<(height) * fy / 8+100*fy){
-            if(action==MotionEvent.ACTION_UP)
-                Gamemode=1;
+        if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&&Ytouch>(height) * fy / 8&&Ytouch<(height) * fy / 8+100*fy&&shopex){
+            if(action==MotionEvent.ACTION_UP){
+                shopex=false;
+                Gamemode=1;}
 
 
             System.out.println("gooood");
         }
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&& Ytouch>(height) * fy / 8+150*fy&&Ytouch<(height) * fy / 8+250*fy&&shopex){
-            if(action==MotionEvent.ACTION_UP)
+            if(action==MotionEvent.ACTION_UP){
                 Gamemode=2;
+                shopex=false;
+            }
+
             System.out.println("gooood");
         }
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&&Ytouch>(height) * fy / 8+300*fy&&Ytouch<(height) * fy / 8+400*fy&&shopex){
-            if(action==MotionEvent.ACTION_UP)
+            if(action==MotionEvent.ACTION_UP){
                 Gamemode=3;
+                shopex=false;
+            }
+
         }
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&&Ytouch>(height) * fy / 8+450*fy&&Ytouch<(height) * fy / 8+550*fy&&shopex){
             if(action==MotionEvent.ACTION_UP)
@@ -773,12 +782,12 @@ public class GameView extends View {
                             maxCombo=player.getLongestCombo();
                         System.out.println("popopo v3 "+maxCombo);
                         maxGoldEarned=score/10;
-                        if(score/10<player.getMostGoldEarnedInSingleGame())
+                        if(score/10*Gamemode<player.getMostGoldEarnedInSingleGame())
                             maxGoldEarned=player.getMostGoldEarnedInSingleGame();
                         highscore=score;
                         if(score<player.getHighScore())
                             highscore=player.getHighScore();
-                        updatedata(player.getUsername(),new Player(player.getUsername(),player.getNumberOfGames()+1,0,maxGoldEarned,maxCombo,player.getCurrentGold()+(score/10),highscore));
+                        updatedata(player.getUsername(),new Player(player.getUsername(),player.getNumberOfGames()+1,0,maxGoldEarned,maxCombo,player.getCurrentGold()+(score/10)*Gamemode,highscore));
                         done =false;}
                     switch (String.valueOf(score).length()) {
                         case 1:
@@ -933,8 +942,8 @@ public class GameView extends View {
                 matrixglobal.setTranslate(900*fx,32*fy);
                 matrixglobal.postScale(scalex,scaley,900*fx,32*fy);
                 canvas.drawBitmap(xbutton,matrixglobal,null);
-                matrixglobal.setTranslate((width)* fx/ 2-100*fx, (height ) * fy / 8+450*fy);
-                matrixglobal.postScale(scalex, scaley, (width) * fx / 2-100*fx, (height ) * fy / 8+450*fy);
+                matrixglobal.setTranslate((width)* fx/ 2-200*fx, (height ) * fy / 8+450*fy);
+                matrixglobal.postScale(scalex, scaley, (width) * fx / 2-200*fx, (height ) * fy / 8+450*fy);
                 canvas.drawBitmap(highscoresbut,matrixglobal,null);
 
                 if(player.isBK()){
@@ -1122,7 +1131,7 @@ public class GameView extends View {
                     heartnum--;
                 combo = 0;
             } else {
-                score += 10 * Gamemode;
+                score += 10;
                 combo++;
                 System.out.println("popopo"+combo);
                 if (combo > maxCombo)

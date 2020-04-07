@@ -1,6 +1,8 @@
 package com.example.archerygame;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Random;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,11 +38,13 @@ public class Login extends AppCompatActivity {
     ImageButton RegisterButton,LoginButton;
     EditText UsernameEdit, PasswordEdit;
     Player player1;
+    boolean prizee;
     Intent s;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         s= new Intent(getApplicationContext(),StartGame.class);
         final Intent check = getIntent();
         database = FirebaseDatabase.getInstance();
@@ -49,6 +56,7 @@ public class Login extends AppCompatActivity {
         UsernameEdit = findViewById(R.id.editTextuser);
         PasswordEdit = findViewById(R.id.editTextpass);
         checkBox = findViewById(R.id.checkBox);
+        prizee=check.getExtras().getBoolean("prize");
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,8 +77,10 @@ public class Login extends AppCompatActivity {
             }
         });
         //Toast.makeText(getApplicationContext(),"workplease",Toast.LENGTH_SHORT).show();
-        if(check.getExtras().getBoolean("check"))
+        if(check.getExtras().getBoolean("check")){
             getData();
+        }
+
         else{
             SharedPreferences.Editor editor =sharedPreferences.edit();
             editor.putString("username","");
@@ -100,6 +110,9 @@ public class Login extends AppCompatActivity {
                 if(dataSnapshot.child(Username).exists()) {
                     if (!Username.isEmpty()) {
                         player1 = dataSnapshot.child(Username).getValue(Player.class);
+                        Random random = new Random();
+                        if(prizee)
+                        player1.setCurrentGold(player1.getCurrentGold()+random.nextInt(15)+5);
                         if(player1.getPassword().equals(Password)){
                             if(checkBox.isChecked()){
                                 boolean checked = checkBox.isChecked();
@@ -118,6 +131,7 @@ public class Login extends AppCompatActivity {
                             //        MostGoldEarnedInSingleGame=0;
                             //        longestCombo=0;
                             //        currentGold=0;
+                            PlayerInfo.child(Username).child("currentGold").setValue(player1.getCurrentGold());
                             s.putExtra("password",player1.getPassword());
                             s.putExtra("email",player1.getEmail());
                             s.putExtra("username",player1.getUsername());
@@ -137,14 +151,25 @@ public class Login extends AppCompatActivity {
                             s.putExtra("bow4",player1.bow4);
                             s.putExtra("bow5",player1.bow5);
                             System.out.println("king: "+player1.bow3);
+                            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(Calendar.HOUR,23);
+                            calendar.set(Calendar.MINUTE,59);
+                            calendar.set(Calendar.SECOND,59);
+                            PendingIntent pendingIntent=  PendingIntent.getBroadcast(getApplicationContext(),100,new Intent(getApplicationContext(),AlarmReceiver.class),PendingIntent.FLAG_UPDATE_CURRENT);
+                            alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
                             startActivity(s);
                             UsernameEdit.getText().clear();
                             PasswordEdit.getText().clear();
                         }
                         else{
-                            Toast.makeText(Login.this,"WrongPassword",Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(Login.this,"Wrong Password",Toast.LENGTH_SHORT).show();
                         }
                     }
+                }
+                else{
+                    Toast.makeText(Login.this,"Username doesn't exist",Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
