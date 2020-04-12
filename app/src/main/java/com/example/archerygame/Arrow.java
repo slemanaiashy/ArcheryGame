@@ -8,15 +8,12 @@ public class Arrow {
     protected double ySpeed;
     protected double xSpeed,Angle;
     protected Bitmap arrow;
-    protected int width ;
-    protected int height;
-    protected  float x,fx;
-    protected  float y,fy;
+    protected  float x;
+    protected  float y;
     protected int arrowHeight;
     protected int arrowWidth;
     protected float canvasHeight;
     protected float canvasWidth;
-    protected int Abx,Aby;
 
     private boolean a,b,ab;
 
@@ -59,13 +56,11 @@ public class Arrow {
         this.canvasWidth = canvasWidth;
     }
 
-    public Arrow(int time, double ySpeed, double xSpeed, Bitmap arrow, int width, int height, int arrowHeight, int arrowWidth, float x1, float y1, boolean ab, boolean a , boolean b, float fx, float fy) {
+    public Arrow(int time, double ySpeed, double xSpeed, Bitmap arrow, int arrowHeight, int arrowWidth, float x1, float y1, boolean ab, boolean a , boolean b) {
         Time = time;
         this.ySpeed = ySpeed;
         this.xSpeed = xSpeed;
         this.arrow = arrow;
-        this.width = width;
-        this.height = height;
         this.x=x1;
         this.y=y1;
         this.a =a ;
@@ -73,20 +68,13 @@ public class Arrow {
         this.ab=ab;
         this.arrowHeight = arrowHeight;
         this.arrowWidth = arrowWidth;
-        this.fx=fx;
-        this.fy=fy;
     }
-    public void Setx (float x ){
+    public void Setx (float x )
+    {
         this.x=x;
     }
     public void Sety (float y ){
         this.y=y;
-    }
-    public  double getstepy(){
-        return y+getySpeed() ;
-    }
-    public  double getstepx(){
-        return x+(int) Math.abs(xSpeed * (Time));
     }
     public void setAngle(double Angle){
         this.Angle=Angle;

@@ -6,7 +6,6 @@ import android.media.SoundPool;
 
 public class SoundPlayer {
     private static SoundPool soundPool;
-    private int startSound;
     private int hitSound;
     private int gameOver;
 
@@ -14,7 +13,6 @@ public class SoundPlayer {
         soundPool= new SoundPool(2, AudioManager.STREAM_MUSIC,0);
         hitSound=soundPool.load(context,R.raw.boopfinal,1);
         gameOver=soundPool.load(context,R.raw.awwfinal,1);
-        startSound=soundPool.load(context,R.raw.nature,1);
     }
     public void playHitSound(){
         soundPool.play(hitSound,1.0f,1.0f,1,0,1.0f);

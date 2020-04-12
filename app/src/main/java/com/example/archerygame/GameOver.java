@@ -1,26 +1,16 @@
 package com.example.archerygame;
 
 public class GameOver {
-    protected int TimePlayed;
     protected int GoldEarned;
     protected int HighScore;
     protected int Score;
 
 
 
-    public GameOver(int timePlayed, int goldEarned, int highScore, int score) {
-        TimePlayed = timePlayed;
+    public GameOver( int goldEarned, int highScore, int score) {
         GoldEarned = goldEarned;
         HighScore = highScore;
         Score = score;
-    }
-
-    public int getTimePlayed() {
-        return TimePlayed;
-    }
-
-    public void setTimePlayed(int timePlayed) {
-        TimePlayed = timePlayed;
     }
 
     public int getGoldEarned() {

@@ -56,7 +56,7 @@ public class StartGame extends Activity {
                     @Override
                     public void onClick(View view) {
                         if(i.getExtras().getBoolean("login")){
-                            Player player=new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email"),i.getExtras().getInt("gamenum"),i.getExtras().getInt("longestgame"),i.getExtras().getInt("mostgoldinasinglegame"),i.getExtras().getInt("longestcombo"),i.getExtras().getInt("currentgold"),i.getExtras().getInt("highscore"),i.getExtras().getBoolean("BK"),i.getExtras().getBoolean("SE"),i.getExtras().getInt("equiped"),i.getExtras().getBoolean("bow1"),i.getExtras().getBoolean("bow2"),i.getExtras().getBoolean("bow3"),i.getExtras().getBoolean("bow4"),i.getExtras().getBoolean("bow5"));
+                            Player player=new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email"),i.getExtras().getInt("gamenum"),i.getExtras().getInt("mostgoldinasinglegame"),i.getExtras().getInt("longestcombo"),i.getExtras().getInt("currentgold"),i.getExtras().getInt("highscore"),i.getExtras().getBoolean("BK"),i.getExtras().getBoolean("SE"),i.getExtras().getInt("equiped"),i.getExtras().getBoolean("bow1"),i.getExtras().getBoolean("bow2"),i.getExtras().getBoolean("bow3"),i.getExtras().getBoolean("bow4"),i.getExtras().getBoolean("bow5"));
                             gameView = new GameView(context,player,1,gameData);}
                         else{
 
@@ -69,8 +69,7 @@ public class StartGame extends Activity {
                     @Override
                     public void onClick(View view) {
                         if(i.getExtras().getBoolean("login")){
-                            Player player=new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email"),i.getExtras().getInt("gamenum"),i.getExtras().getInt("longestgame"),i.getExtras().getInt("mostgoldinasinglegame"),i.getExtras().getInt("longestcombo"),i.getExtras().getInt("currentgold"),i.getExtras().getInt("highscore"),i.getExtras().getBoolean("BK"),i.getExtras().getBoolean("SE"),i.getExtras().getInt("equiped"),i.getExtras().getBoolean("bow1"),i.getExtras().getBoolean("bow2"),i.getExtras().getBoolean("bow3"),i.getExtras().getBoolean("bow4"),i.getExtras().getBoolean("bow5"));
-                            gameView = new GameView(context,player,2,gameData);}
+                            Player player=new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email"),i.getExtras().getInt("gamenum"),i.getExtras().getInt("mostgoldinasinglegame"),i.getExtras().getInt("longestcombo"),i.getExtras().getInt("currentgold"),i.getExtras().getInt("highscore"),i.getExtras().getBoolean("BK"),i.getExtras().getBoolean("SE"),i.getExtras().getInt("equiped"),i.getExtras().getBoolean("bow1"),i.getExtras().getBoolean("bow2"),i.getExtras().getBoolean("bow3"),i.getExtras().getBoolean("bow4"),i.getExtras().getBoolean("bow5"));                            gameView = new GameView(context,player,2,gameData);}
                         else{
                             gameView=new GameView(context,new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email")),2,gameData);
                         }
@@ -81,7 +80,7 @@ public class StartGame extends Activity {
                     @Override
                     public void onClick(View view) {
                         if(i.getExtras().getBoolean("login")){
-                            Player player=new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email"),i.getExtras().getInt("gamenum"),i.getExtras().getInt("longestgame"),i.getExtras().getInt("mostgoldinasinglegame"),i.getExtras().getInt("longestcombo"),i.getExtras().getInt("currentgold"),i.getExtras().getInt("highscore"),i.getExtras().getBoolean("BK"),i.getExtras().getBoolean("SE"),i.getExtras().getInt("equiped"),i.getExtras().getBoolean("bow1"),i.getExtras().getBoolean("bow2"),i.getExtras().getBoolean("bow3"),i.getExtras().getBoolean("bow4"),i.getExtras().getBoolean("bow5"));
+                            Player player=new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email"),i.getExtras().getInt("gamenum"),i.getExtras().getInt("mostgoldinasinglegame"),i.getExtras().getInt("longestcombo"),i.getExtras().getInt("currentgold"),i.getExtras().getInt("highscore"),i.getExtras().getBoolean("BK"),i.getExtras().getBoolean("SE"),i.getExtras().getInt("equiped"),i.getExtras().getBoolean("bow1"),i.getExtras().getBoolean("bow2"),i.getExtras().getBoolean("bow3"),i.getExtras().getBoolean("bow4"),i.getExtras().getBoolean("bow5"));
                             gameView = new GameView(context,player,3,gameData);}
                         else{
                             gameView=new GameView(context,new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email")),3,gameData);
@@ -93,8 +92,7 @@ public class StartGame extends Activity {
                     @Override
                     public void onClick(View view) {
                         if(i.getExtras().getBoolean("login")){
-                            Player player=new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email"),i.getExtras().getInt("gamenum"),i.getExtras().getInt("longestgame"),i.getExtras().getInt("mostgoldinasinglegame"),i.getExtras().getInt("longestcombo"),i.getExtras().getInt("currentgold"),i.getExtras().getInt("highscore"),i.getExtras().getBoolean("BK"),i.getExtras().getBoolean("SE"),i.getExtras().getInt("equiped"),i.getExtras().getBoolean("bow1"),i.getExtras().getBoolean("bow2"),i.getExtras().getBoolean("bow3"),i.getExtras().getBoolean("bow4"),i.getExtras().getBoolean("bow5"));
-                            gameView = new GameView(context,player,4,gameData);}
+                            Player player=new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email"),i.getExtras().getInt("gamenum"),i.getExtras().getInt("mostgoldinasinglegame"),i.getExtras().getInt("longestcombo"),i.getExtras().getInt("currentgold"),i.getExtras().getInt("highscore"),i.getExtras().getBoolean("BK"),i.getExtras().getBoolean("SE"),i.getExtras().getInt("equiped"),i.getExtras().getBoolean("bow1"),i.getExtras().getBoolean("bow2"),i.getExtras().getBoolean("bow3"),i.getExtras().getBoolean("bow4"),i.getExtras().getBoolean("bow5"));                            gameView = new GameView(context,player,4,gameData);}
                         else{
                             gameView=new GameView(context,new Player(i.getExtras().getString("username"),i.getExtras().getString("password"),i.getExtras().getString("email")),4,gameData);
                         }

@@ -44,7 +44,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         s= new Intent(getApplicationContext(),StartGame.class);
         final Intent check = getIntent();
         database = FirebaseDatabase.getInstance();
@@ -136,7 +136,7 @@ public class Login extends AppCompatActivity {
                             s.putExtra("email",player1.getEmail());
                             s.putExtra("username",player1.getUsername());
                             s.putExtra("gamenum",player1.getNumberOfGames());
-                            s.putExtra("longestgame",player1.getLogestGame());
+
                             s.putExtra("mostgoldinasinglegame",player1.getMostGoldEarnedInSingleGame());
                             s.putExtra("longestcombo",player1.getLongestCombo());
                             s.putExtra("currentgold",player1.getCurrentGold());
@@ -153,14 +153,15 @@ public class Login extends AppCompatActivity {
                             System.out.println("king: "+player1.bow3);
                             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                             Calendar calendar = Calendar.getInstance();
-                            calendar.set(Calendar.HOUR,23);
+                             calendar.set(Calendar.HOUR,23);
                             calendar.set(Calendar.MINUTE,59);
                             calendar.set(Calendar.SECOND,59);
                             PendingIntent pendingIntent=  PendingIntent.getBroadcast(getApplicationContext(),100,new Intent(getApplicationContext(),AlarmReceiver.class),PendingIntent.FLAG_UPDATE_CURRENT);
                             alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
                             startActivity(s);
-                            UsernameEdit.getText().clear();
-                            PasswordEdit.getText().clear();
+                            UsernameEdit.setText("");
+                            PasswordEdit.setText("");
+                            checkBox.setChecked(false);
                         }
                         else{
 

@@ -1,23 +1,22 @@
 package com.example.archerygame;
 
 public class Player {
-    String Username;
-    String Password;
-    String Email;
-    int numberOfGames;
-    int logestGame;
-    int MostGoldEarnedInSingleGame;
-    int longestCombo;
-    int currentGold;
-    int highScore;
-    int equiped;
-    boolean bow1;
-    boolean bow2;
-    boolean bow3;
-    boolean bow4;
-    boolean bow5;
-    boolean SE;
-    boolean BK;
+    protected   String Username;
+    protected  String Password;
+    protected  String Email;
+    protected   int numberOfGames;
+    protected  int MostGoldEarnedInSingleGame;
+    protected   int longestCombo;
+    protected  int currentGold;
+    protected  int highScore;
+    protected   int equiped;
+    protected  boolean bow1;
+    protected  boolean bow2;
+    protected  boolean bow3;
+    protected boolean bow4;
+    protected  boolean bow5;
+    protected boolean SE;
+   protected boolean BK;
 
     public int getEquiped() {
         return equiped;
@@ -72,7 +71,6 @@ public class Player {
         Password = password;
         Email = email;
         numberOfGames=0;
-        logestGame=0;
         MostGoldEarnedInSingleGame=0;
         longestCombo=0;
         currentGold=0;
@@ -86,21 +84,19 @@ public class Player {
         bow4=false;
         bow5=false;
     }
-    public Player(String username, String password, String email, int numberOfGames, int logestGame, int currentGold,int highScore) {
+    public Player(String username, String password, String email, int numberOfGames, int currentGold,int highScore) {
         Username = username;
         Password = password;
         Email = email;
         this.numberOfGames = numberOfGames;
-        this.logestGame = logestGame;
         this.currentGold = currentGold;
     }
     public Player(){
 
     }
-    public Player( String username,int numberOfGames, int logestGame, int mostGoldEarnedInSingleGame, int longestCombo, int currentGold,int highScore){
+    public Player( String username,int numberOfGames, int mostGoldEarnedInSingleGame, int longestCombo, int currentGold,int highScore){
         Username = username;
         this.numberOfGames = numberOfGames;
-        this.logestGame = logestGame;
         MostGoldEarnedInSingleGame = mostGoldEarnedInSingleGame;
         this.longestCombo = longestCombo;
         this.currentGold = currentGold;
@@ -132,12 +128,11 @@ public class Player {
         this.BK = BK;
     }
 
-    public Player(String username, String password, String email, int numberOfGames, int logestGame, int mostGoldEarnedInSingleGame, int longestCombo, int currentGold, int highScore, boolean BK, boolean SE,int equiped,boolean bow1,boolean bow2,boolean bow3,boolean bow4,boolean bow5) {
+    public Player(String username, String password, String email, int numberOfGames, int mostGoldEarnedInSingleGame, int longestCombo, int currentGold, int highScore, boolean BK, boolean SE,int equiped,boolean bow1,boolean bow2,boolean bow3,boolean bow4,boolean bow5) {
         Username = username;
         Password = password;
         Email = email;
         this.numberOfGames = numberOfGames;
-        this.logestGame = logestGame;
         MostGoldEarnedInSingleGame = mostGoldEarnedInSingleGame;
         this.longestCombo = longestCombo;
         this.currentGold = currentGold;
@@ -182,14 +177,6 @@ public class Player {
 
     public void setNumberOfGames(int numberOfGames) {
         this.numberOfGames = numberOfGames;
-    }
-
-    public int getLogestGame() {
-        return logestGame;
-    }
-
-    public void setLogestGame(int logestGame) {
-        this.logestGame = logestGame;
     }
 
     public void setMostGoldEarnedInSingleGame(int mostGoldEarnedInSingleGame) {

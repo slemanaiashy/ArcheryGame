@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.os.Process;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import android.os.Handler;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 
 import java.util.Random;
@@ -47,7 +49,7 @@ public class GameView extends View {
 
     public boolean onCapturedPointerEvent(MotionEvent motionEvent) {
         float verticalOffset = motionEvent.getY();
-        System.out.println(verticalOffset);
+
         return true;
     }
 
@@ -55,7 +57,7 @@ public class GameView extends View {
         // Get the coordinates required by your app
 
         float horizontalOffset = motionEvent.getX();
-        System.out.println(horizontalOffset);
+
         return true;
     }
 
@@ -63,45 +65,59 @@ public class GameView extends View {
     public boolean onTouchEvent (MotionEvent event){
         float Ytouch = event.getY();// y
         float Xtouch = event.getX();//x
-        System.out.println("Xtouch"+Xtouch);
-        System.out.println("Ytouch"+Ytouch);
         int action = event.getAction();
         long now =  System.currentTimeMillis();
-        System.out.println("WTishapen"+(T % 4 == 0 && T != 1&&action==MotionEvent.ACTION_UP));
-        if (T % 4 == 0 && T != 1&&action==MotionEvent.ACTION_UP) {
+
+        if (T % 4 == 0 &&action==MotionEvent.ACTION_UP) {
             z=now-z;
             up = true;
         }
-        System.out.println("nooow"+up);
+
         if(T%3==0&&action==MotionEvent.ACTION_DOWN){
             z=now;
         }
         if(action==MotionEvent.ACTION_MOVE){
         }
+
         else
-        if (!(Xtouch > 0 && Xtouch < 105*fx && Ytouch > 0 && Ytouch < 106*fy)&&!settingpress&&!isShop&&gamemodedone&&!midair&&!isHighscores&&finishgame) {
+        if (!(Xtouch > 0 && Xtouch < 105*fx && Ytouch > 0 && Ytouch < 106*fy)&&!settingpress&&!isShop&&gamemodedone&&!midair&&!isHighscores&&finishgame&&T<=4) {
             T++;
-            System.out.println("zxcsa");
+            System.out.println(!settingpress+" "+!isShop+""+gamemodedone+" "+!midair+" "+!isHighscores+" "+finishgame);
+            System.out.println("mee+: "+action==MotionEvent.ACTION_UP+"   "+(T % 4 == 0));
         }
         else {
-            System.out.println("asdfa "+finishgame+" "+!midair+" "+gamemodedone+" "+!settingpress+" "+!isShop+" "+!isHighscores);
-            if(!isShop&&gamemodedone&&!midair&&finishgame){
-                settingpress = true;
+
+            if(!isShop&&gamemodedone&&!midair&&finishgame&&T!=5){
+                if(Xtouch > 0 && Xtouch < 105*fx && Ytouch > 0 && Ytouch < 106*fy){
+                    System.out.println("i am 1");
+                    settingpress = true;
+                }
+
                 if(Xtouch>900*fx&&Xtouch<980*fx&&Ytouch>32*fy&&Ytouch<112*fy){
-                    if(action==MotionEvent.ACTION_UP)
+                    if(action==MotionEvent.ACTION_UP){
+                        System.out.println("i am 2");
                         settingpress=false;
+                    }
+
                 }
                 if(Xtouch>705*fx&&Xtouch<790*fx&&Ytouch>195*fy&&Ytouch<280*fy&&action==MotionEvent.ACTION_UP){
+                    System.out.println("i am 3");
                     bm=!bm;
                     updateBK(player.getUsername(),bm);
                 }
                 if(Xtouch>705*fx&&Xtouch<790*fx&&Ytouch>295*fy&&Ytouch<380*fy&&action==MotionEvent.ACTION_UP){
+                    System.out.println("i am 4");
                     se=!se;
                     updateSE(player.getUsername(),se);
                 }
                 if(Xtouch>(width)* fx/ 2-200*fx&&Xtouch<(width)* fx/ 2+180*fx&&Ytouch>(height) * fy / 8+450*fy&&Ytouch<(height) * fy / 8+550*fy){
+                    System.out.println("i am 5");
                     isHighscores=true;
                 }
+            }
+            else{
+                System.out.println("i am up");
+                up=true;
             }
         }
         if(isHighscores&&Xtouch>900*fx&&Xtouch<980*fx&&Ytouch>32*fy&&Ytouch<112*fy&&finishgame){
@@ -119,9 +135,6 @@ public class GameView extends View {
             if(action==MotionEvent.ACTION_UP)
                 isShop=false;
         }
-        //700*fx, (height/2-70)*fy,290*fx, (height/2-70)*fy//(width)* fx/ 2-100*fx, (height ) * fy / 8+450*fy//87,50
-        //(width)* fx/ 2-100*fx, (height ) * fy / 8+450*fy
-        System.out.println("areyouin? "+ ( Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx*fx&&Ytouch>(height ) * fy&&Ytouch<(height+100 ) * fy&&isShop&&isbuy));
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&&Ytouch>(height ) * fy / 8+450*fy&&Ytouch<(height ) * fy / 8+550*fy&&!finishgame){
             if(action==MotionEvent.ACTION_UP) {
                 switch (Gamemode) {
@@ -160,14 +173,12 @@ public class GameView extends View {
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx*fx&&Ytouch>(height ) * fy / 8+450*fy&&Ytouch<(height ) * fy / 8+550*fy&&isShop&&isbuy&&!isequip){
             if(Prices[arrownum]<player.getCurrentGold())
                 if(action==MotionEvent.ACTION_UP) {
-                    updatedata(player.getUsername(),new Player(player.getUsername(),player.getNumberOfGames()+1,0,maxGoldEarned,maxCombo,player.getCurrentGold()-Prices[arrownum],highscore));
+                    updatedata(player.getUsername(),new Player(player.getUsername(),player.getNumberOfGames()+1,maxGoldEarned,maxCombo,player.getCurrentGold()-Prices[arrownum],highscore));
                     Collection[arrownum]=true;
                     updateCollection(player.getUsername(),Collection[arrownum]);
                     isbuy=false;
                 }
         }
-
-        System.out.println("equip "+isequip+" "+isShop+" "+isbuy);
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx*fx&&Ytouch>(height ) * fy / 8+450*fy&&Ytouch<(height ) * fy / 8+550*fy&&isShop&&isequip&&!isbuy){
             if(action==MotionEvent.ACTION_UP){
                 player.setEquiped(arrownum);
@@ -191,7 +202,7 @@ public class GameView extends View {
                 Gamemode=1;}
 
 
-            System.out.println("gooood");
+
         }
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&& Ytouch>(height) * fy / 8+150*fy&&Ytouch<(height) * fy / 8+250*fy&&shopex){
             if(action==MotionEvent.ACTION_UP){
@@ -199,7 +210,6 @@ public class GameView extends View {
                 shopex=false;
             }
 
-            System.out.println("gooood");
         }
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx&&Ytouch>(height) * fy / 8+300*fy&&Ytouch<(height) * fy / 8+400*fy&&shopex){
             if(action==MotionEvent.ACTION_UP){
@@ -215,9 +225,9 @@ public class GameView extends View {
             isShop=true;
 
         }
-      if(Xtouch>15*fx&&Xtouch<189*fx*fx&&Ytouch>(height -155) * fy&&Ytouch<(height -55) * fy&&shopex){
-            if(action==MotionEvent.ACTION_DOWN){
-                if(action==MotionEvent.ACTION_UP){
+      if(Xtouch>15*fx&&Xtouch<189*fx*fx&&Ytouch>(height -155) * fy&&Ytouch<(height -55) * fy&&shopex&&!gamemodedone){
+
+                if(action==MotionEvent.ACTION_DOWN){
                 final String PREFS_NAME="PrefsFile";
                 SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                 SharedPreferences.Editor editor =sharedPreferences.edit();
@@ -225,9 +235,11 @@ public class GameView extends View {
                 editor.putString("password","");
                 editor.putBoolean("checkbox",false);
                 editor.apply();
-                System.exit(0);
+                    Toast.makeText(context,"Successfully logged out",Toast.LENGTH_SHORT).show();
+               kill=true;
+
                 }
-            }
+
         }
 
         System.out.println("number  "+T);
@@ -238,6 +250,7 @@ public class GameView extends View {
     Random random = new Random();
     SoundPlayer soundPlayer;
     GameData gameData;
+    int Timekill=0;
     boolean  isHighscores=false;
     protected Canvas canvas;
     Boolean finish=false,recreate=false,done=true,se,bm,isShop=false,firstdiffi=true,shopex=false,gamemodedone=false,midair=false,isbuy=false,isequip=false;
@@ -278,7 +291,7 @@ public class GameView extends View {
     boolean [] Collection = new boolean[5];
     MediaPlayer mp ;
     float scaleapplex,scaleappley;
-    boolean check = true, touch = true, flag = false, up = false, first = true, settingpress = false, bound = true, maxDegree = true,angleboolean=true,finishgame=true;
+    boolean check = true, touch = true, flag = false, up = false, first = true, settingpress = false, bound = true, maxDegree = true,angleboolean=true,finishgame=true,kill=false;
     int width=1184, height=720, heartFrame = 0, bowFrame = 0, T = 1,wid,hei; // work
     Bitmap[]  heart1, heart3, heart2,number,numberscore,boxBM,boxSE,bow, bowafter, arrow;
     View view;
@@ -286,7 +299,7 @@ public class GameView extends View {
     private MotionEvent event;
     Intent intent12;
     boolean mpbol=true;
-    public GameView(Context context,Player player,int Gamemode,GameData gameData) {
+    public  GameView(Context context,Player player,int Gamemode,GameData gameData) {
         super(context);
         this.Gamemode=Gamemode;
         this.context=context;
@@ -310,17 +323,17 @@ public class GameView extends View {
         display.getSize(point);
         wid = point.x;
         hei = point.y;
-        System.out.println(wid+" shar"+hei);
+
         fy=hei/720f;
         fx =(wid/1184f);
         density = context.getResources().getDisplayMetrics().density/2;
         scalex=fx/density;
         scaley=fy/density;
-        System.out.println(fx+" wt "+2094/1184);
+
         xbutton= BitmapFactory.decodeResource(context.getResources(), R.drawable.xbutton);
         applecorx =(int)(applecorx*fx);
         applecory =(int)(applecory*fy);
-        System.out.println(fy+"  wt1 "+1080/720);
+
         ground = height - 200;
         rect = new Rect(0, 0, wid, hei);
         rect1 = new Rect(10, 10, width, height);
@@ -363,7 +376,7 @@ public class GameView extends View {
         Collection[2]=player.isBow3();
         Collection[3]=player.isBow4();
         Collection[4]=player.isBow5();
-        System.out.println("solution"+player.isBow2()+"  "+player.isBow3());
+
         heart3 = new Bitmap[2];
         boxBM= new Bitmap[2];
         boxSE= new Bitmap[2];
@@ -414,14 +427,21 @@ public class GameView extends View {
         super.onDraw(canvas);
         BitmapFactory.Options options = new BitmapFactory.Options();
         matrixglobal=new Matrix();
-        System.out.println(Collection[2]);
-        System.out.println("ytu"+T);
+        if(kill){
+            if(Timekill==15){
+                Process.killProcess(Process.myPid());
+
+            }
+
+            else{
+                Timekill++;
+            }
+        }
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(getResources(), R.drawable.cropped, options);
         int arrowheight = options.outHeight;//12px
         int arrowwidth = options.outWidth;
         canvas.drawBitmap(background, null, rect, null);
-        System.out.println(Gamemode+"asdadgawgdf");
         switch (Gamemode){
             case 1:
                 gamemodedone=true;
@@ -448,7 +468,6 @@ public class GameView extends View {
                 scaleappley=0.75f*scaley;
                 break;
             case 4:
-                System.out.println("whgato"+shopex);
                 if(!shopex){
                     matrixglobal.setTranslate(130*fx,25*fy);
                     matrixglobal.postScale(scalex,scaley,130*fx,25*fy);
@@ -644,7 +663,7 @@ public class GameView extends View {
                 }
                 //
                 if(shopex) {
-                    System.out.println("success?");
+
                     matrixglobal.setTranslate(width * fx / 2-100*fx, height * fy / 8);
                     matrixglobal.postScale(scalex, scaley, width * fx / 2-100*fx, height * fy / 8);
                     canvas.drawBitmap(easy, matrixglobal, null);
@@ -780,14 +799,13 @@ public class GameView extends View {
                             soundPlayer.playGameOver();
                         if(maxCombo<player.getLongestCombo())
                             maxCombo=player.getLongestCombo();
-                        System.out.println("popopo v3 "+maxCombo);
                         maxGoldEarned=score/10;
                         if(score/10*Gamemode<player.getMostGoldEarnedInSingleGame())
                             maxGoldEarned=player.getMostGoldEarnedInSingleGame();
                         highscore=score;
                         if(score<player.getHighScore())
                             highscore=player.getHighScore();
-                        updatedata(player.getUsername(),new Player(player.getUsername(),player.getNumberOfGames()+1,0,maxGoldEarned,maxCombo,player.getCurrentGold()+(score/10)*Gamemode,highscore));
+                        updatedata(player.getUsername(),new Player(player.getUsername(),player.getNumberOfGames()+1,maxGoldEarned,maxCombo,player.getCurrentGold()+(score/10)*Gamemode,highscore));
                         done =false;}
                     switch (String.valueOf(score).length()) {
                         case 1:
@@ -1025,7 +1043,7 @@ public class GameView extends View {
                             matrix.postScale(scalex, scaley, (width / 9 - bow[0].getWidth() / 2) * fx, (height * 16 / 32 - bow[0].getHeight() / 2) * fy);
                             canvas.drawBitmap(bow[player.equiped], matrix, null);
                         }
-                        System.out.println(up +" test "+T);
+
                         if (up && T % 5 == 0) {
                             midair = true;
                             if (first) {
@@ -1056,14 +1074,14 @@ public class GameView extends View {
                             matrixafter.postScale(scalex, scaley, (width / 9 - bow[0].getWidth() / 2) * fx, (height * 16 / 32 - bow[0].getHeight() / 2) * fy);
                             canvas.drawBitmap(bowafter[player.equiped], matrixafter, null);
 
-                            arrow1 = new Arrow(Time, yspeed, xspeed, arrow[player.equiped], width, height, arrow[0].getWidth(), arrow[0].getHeight(), (width / 9 - arrow[0].getWidth() / 2) * fx, ((height - (arrow[0].getHeight())) / 2) * fy, true, false, false, fx, fy);
+                            arrow1 = new Arrow(Time, yspeed, xspeed, arrow[player.equiped], arrow[0].getWidth(), arrow[0].getHeight(), (width / 9 - arrow[0].getWidth() / 2) * fx, ((height - (arrow[0].getHeight())) / 2) * fy, true, false, false);
                             arrow1.setCanvasWidth((float) (canvas.getWidth() - Math.cos(Math.toRadians(arrow1.getAngle())) * arrowwidth * density));
                             arrow1.setCanvasHeight((float) (canvas.getHeight() - Math.sin(Math.toRadians(arrow1.getAngle())) * arrowwidth * density));
                             if (arrow1.getX() && arrow1.getY()) {
                                 arrow1.setAb(true);
                                 arrow1.setB(false);
                                 arrow1.setA(false);
-                                System.out.println("ab");
+
                             } else {
                                 arrow1.setTime(timee);
                                 angleboolean = false;
@@ -1075,19 +1093,19 @@ public class GameView extends View {
                                     arrow1.setB(false);
                                     arrow1.setA(true);
                                     arrow1.setAb(false);
-                                    System.out.println("a");
+
 
                                 } else {
                                     if (arrow1.getY()) {
                                         arrow1.setB(true);
                                         arrow1.setA(false);
                                         arrow1.setAb(false);
-                                        System.out.println("b");
+
                                     } else {
                                         arrow1.setB(false);
                                         arrow1.setA(false);
                                         arrow1.setAb(false);
-                                        System.out.println("none");
+
 
                                     }
                                 }
@@ -1123,7 +1141,7 @@ public class GameView extends View {
     }
     private void restart() {
         delayfinish++;
-        System.out.println("meeee"+delayfinish);
+
         if (delayfinish == 4) {
             midair = false;
             if (appleboolean) {
@@ -1133,11 +1151,13 @@ public class GameView extends View {
             } else {
                 score += 10;
                 combo++;
-                System.out.println("popopo"+combo);
+
                 if (combo > maxCombo)
                     maxCombo = combo;
-                System.out.println("popopo v2 "+maxCombo);
+
             }
+            kill=false;
+            Timekill=0;
             appleboolean = true;
             firsttime = true;
             finish = false;
@@ -1165,12 +1185,11 @@ public class GameView extends View {
             heartFrame = 0;
             bowFrame = 0;
             T = 1; // work
-            System.out.println("meemee"+up);
+
         }
     }
     private void updatedata(String key ,Player player1 ) {
         player.setCurrentGold(player1.getCurrentGold());
-        player.setLogestGame(player1.getLogestGame());
         player.setLongestCombo(player1.getLongestCombo());
         player.setMostGoldEarnedInSingleGame(player1.getMostGoldEarnedInSingleGame());
         player.setNumberOfGames(player1.getNumberOfGames());
@@ -1180,7 +1199,7 @@ public class GameView extends View {
     private void updateSE(String key ,boolean SE ) {
         player.setSE(SE);
         PlayerInfo.child(key).setValue(player);
-        System.out.println("seee"+player.isSE());
+
     }
     private void updateBK(String key ,boolean BK ) {
         player.setBK(BK);

@@ -1,7 +1,7 @@
 package com.example.archerygame;
 
 public class GameData {
-    protected   int MostGoldEarnedInSingleGame;
+    protected int MostGoldEarnedInSingleGame;
     protected int longestCombo;
     protected  int HighestGold;
     protected int HighestScore;
