@@ -7,19 +7,13 @@ public class Arrow {
     protected int Time;
     protected double ySpeed;
     protected double xSpeed,Angle;
-    protected Bitmap arrow;
     protected  float x;
     protected  float y;
     protected int arrowHeight;
     protected int arrowWidth;
     protected float canvasHeight;
     protected float canvasWidth;
-
     private boolean a,b,ab;
-
-    public Arrow(Bitmap Arrow){
-        arrow=Arrow;
-    }
 
     public void setA(boolean a) {
         this.a = a;
@@ -40,16 +34,8 @@ public class Arrow {
         Time = time;
     }
 
-    public float getCanvasHeight() {
-        return canvasHeight;
-    }
-
     public void setCanvasHeight(float canvasHeight) {
         this.canvasHeight = canvasHeight;
-    }
-
-    public float getCanvasWidth() {
-        return canvasWidth;
     }
 
     public void setCanvasWidth(float canvasWidth) {
@@ -60,7 +46,6 @@ public class Arrow {
         Time = time;
         this.ySpeed = ySpeed;
         this.xSpeed = xSpeed;
-        this.arrow = arrow;
         this.x=x1;
         this.y=y1;
         this.a =a ;
@@ -90,12 +75,6 @@ public class Arrow {
     }
     public boolean getY(){
         return y+getySpeed()<=(canvasHeight);
-    }
-    public boolean isA() {
-        return a;
-    }
-    public boolean isB() {
-        return b;
     }
     public Matrix getArrow(){
         System.out.println("T: "+Time);

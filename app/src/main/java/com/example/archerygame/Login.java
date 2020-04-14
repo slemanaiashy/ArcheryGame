@@ -27,12 +27,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Login extends AppCompatActivity {
-    private static final String TAG ="Login" ;
     private static final String PREFS_NAME="PrefsFile";
     private SharedPreferences sharedPreferences;
     FirebaseDatabase database;
 
-    Player user1;
     DatabaseReference PlayerInfo;
     CheckBox checkBox;
     ImageButton RegisterButton,LoginButton;
@@ -112,7 +110,8 @@ public class Login extends AppCompatActivity {
                         player1 = dataSnapshot.child(Username).getValue(Player.class);
                         Random random = new Random();
                         if(prizee)
-                        player1.setCurrentGold(player1.getCurrentGold()+random.nextInt(15)+5);
+                            player1.setCurrentGold(player1.getCurrentGold()+random.nextInt(15)+5);
+                        System.out.println("asdas "+Password+"  "+player1.getPassword());
                         if(player1.getPassword().equals(Password)){
                             if(checkBox.isChecked()){
                                 boolean checked = checkBox.isChecked();
@@ -153,7 +152,7 @@ public class Login extends AppCompatActivity {
                             System.out.println("king: "+player1.bow3);
                             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                             Calendar calendar = Calendar.getInstance();
-                             calendar.set(Calendar.HOUR,23);
+                            calendar.set(Calendar.HOUR,23);
                             calendar.set(Calendar.MINUTE,59);
                             calendar.set(Calendar.SECOND,59);
                             PendingIntent pendingIntent=  PendingIntent.getBroadcast(getApplicationContext(),100,new Intent(getApplicationContext(),AlarmReceiver.class),PendingIntent.FLAG_UPDATE_CURRENT);

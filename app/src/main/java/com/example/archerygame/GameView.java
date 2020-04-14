@@ -4,11 +4,9 @@ package com.example.archerygame;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.os.Process;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,9 +17,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -31,32 +26,13 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-import androidx.annotation.RequiresApi;
-
 import static android.content.Context.MODE_PRIVATE;
 
 public class GameView extends View {
 
 
-
-
-    // add setting button using X and Y from touch listener
-    @RequiresApi(api = Build.VERSION_CODES.O)
-
-    public void onClick(View view) {
-        view.requestPointerCapture();
-    }
-
     public boolean onCapturedPointerEvent(MotionEvent motionEvent) {
         float verticalOffset = motionEvent.getY();
-
-        return true;
-    }
-
-    public boolean onCapturedPointer(View view, MotionEvent motionEvent) {
-        // Get the coordinates required by your app
-
-        float horizontalOffset = motionEvent.getX();
 
         return true;
     }
@@ -171,12 +147,16 @@ public class GameView extends View {
             }
         }
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx*fx&&Ytouch>(height ) * fy / 8+450*fy&&Ytouch<(height ) * fy / 8+550*fy&&isShop&&isbuy&&!isequip){
-            if(Prices[arrownum]<player.getCurrentGold())
+            if(Prices[arrownum]<player.getCurrentGold()){
                 if(action==MotionEvent.ACTION_UP) {
                     updatedata(player.getUsername(),new Player(player.getUsername(),player.getNumberOfGames()+1,maxGoldEarned,maxCombo,player.getCurrentGold()-Prices[arrownum],highscore));
                     Collection[arrownum]=true;
-                    updateCollection(player.getUsername(),Collection[arrownum]);
+                    updateCollection(player.getUsername());
                     isbuy=false;
+                }
+            }
+            else{
+                Toast.makeText(context, "you need "+(Prices[arrownum]-player.getCurrentGold())+ " gold to buy this item", Toast.LENGTH_SHORT).show();
                 }
         }
         if(Xtouch>(width)* fx/ 2-100*fx&&Xtouch<(width)* fx/ 2+74*fx*fx&&Ytouch>(height ) * fy / 8+450*fy&&Ytouch<(height ) * fy / 8+550*fy&&isShop&&isequip&&!isbuy){
@@ -253,8 +233,17 @@ public class GameView extends View {
     int Timekill=0;
     boolean  isHighscores=false;
     protected Canvas canvas;
-    Boolean finish=false,recreate=false,done=true,se,bm,isShop=false,firstdiffi=true,shopex=false,gamemodedone=false,midair=false,isbuy=false,isequip=false;
-    Animator animator;
+    Boolean finish=false;
+    Boolean done=true;
+    Boolean se;
+    Boolean bm;
+    Boolean isShop=false;
+    Boolean firstdiffi=true;
+    Boolean shopex=false;
+    Boolean gamemodedone=false;
+    Boolean midair=false;
+    Boolean isbuy=false;
+    Boolean isequip=false;
     Player player ;
     Handler handler;
     Arrow arrow1;
@@ -266,10 +255,29 @@ public class GameView extends View {
     float xcoordinate=0f,ycoordinate=0f;
     double angle=0;
     Rect rect;
-    Rect rect1;
-    long startTime, timeInMilliseconds = 0;
-    Handler customHandler = new Handler();
-    Bitmap logout,background, apple, Bow, settings,Score,gameoverback,settingback,coin,xbutton,shop,easy,hard,med,shopbut,arrowleft,arrowright,buy,equip,equiped,highscores,highscoresbut,play,home;
+    Bitmap logout;
+    Bitmap background;
+    Bitmap apple;
+    Bitmap settings;
+    Bitmap Score;
+    Bitmap gameoverback;
+    Bitmap settingback;
+    Bitmap coin;
+    Bitmap xbutton;
+    Bitmap shop;
+    Bitmap easy;
+    Bitmap hard;
+    Bitmap med;
+    Bitmap shopbut;
+    Bitmap arrowleft;
+    Bitmap arrowright;
+    Bitmap buy;
+    Bitmap equip;
+    Bitmap equiped;
+    Bitmap highscores;
+    Bitmap highscoresbut;
+    Bitmap play;
+    Bitmap home;
     Point point;
     Display display;
     int   applecorx = (random. nextInt(644)+483), applecory=random.nextInt(428)+100;
@@ -279,26 +287,45 @@ public class GameView extends View {
     float fx,density;
     Matrix matrixglobal;
     float fy;
-    final double speedHeight = 10, Gravity = -10;
-    int x = 5, ground, Helpx, Helpy, Time = 1,combo=0,arrownum=0;
-    double arrowx, arrowy, pressTime;
-    boolean appleboolean=true,firsttime=true;
+    int Time = 1;
+    int combo=0;
+    int arrownum=0;
+    double pressTime;
+    boolean appleboolean=true;
     FirebaseDatabase database;
     DatabaseReference PlayerInfo;
-    double yspeed=0, xspeed=0, yEquation, xEquation;
+    double yspeed=0;
+    double xspeed=0;
     int rotateafter;
     long z = 0;
     boolean [] Collection = new boolean[5];
-    MediaPlayer mp ;
     float scaleapplex,scaleappley;
-    boolean check = true, touch = true, flag = false, up = false, first = true, settingpress = false, bound = true, maxDegree = true,angleboolean=true,finishgame=true,kill=false;
-    int width=1184, height=720, heartFrame = 0, bowFrame = 0, T = 1,wid,hei; // work
-    Bitmap[]  heart1, heart3, heart2,number,numberscore,boxBM,boxSE,bow, bowafter, arrow;
-    View view;
+    boolean touch = true;
+    boolean flag = false;
+    boolean up = false;
+    boolean first = true;
+    boolean settingpress = false;
+
+    boolean maxDegree = true;
+    boolean angleboolean=true;
+    boolean finishgame=true;
+    boolean kill=false;
+    int width=1184;
+    int height=720;
+    int T = 1;
+    int wid;
+    int hei; // work
+    Bitmap[]  heart1;
+    Bitmap[] heart3;
+    Bitmap[] heart2;
+    Bitmap[] number;
+    Bitmap[] boxBM;
+    Bitmap[] boxSE;
+    Bitmap[] bow;
+    Bitmap[] bowafter;
+    Bitmap[] arrow;
     Context context;
-    private MotionEvent event;
-    Intent intent12;
-    boolean mpbol=true;
+
     public  GameView(Context context,Player player,int Gamemode,GameData gameData) {
         super(context);
         this.Gamemode=Gamemode;
@@ -334,9 +361,8 @@ public class GameView extends View {
         applecorx =(int)(applecorx*fx);
         applecory =(int)(applecory*fy);
 
-        ground = height - 200;
         rect = new Rect(0, 0, wid, hei);
-        rect1 = new Rect(10, 10, width, height);
+
         shopbut =BitmapFactory.decodeResource(context.getResources(), R.drawable.shopbut);
         bow=new Bitmap[5];
         bowafter=new Bitmap[5];
@@ -381,7 +407,7 @@ public class GameView extends View {
         boxBM= new Bitmap[2];
         boxSE= new Bitmap[2];
         number=new Bitmap[10];
-        numberscore=new Bitmap[10];
+
         bm=player.isBK();
         se=player.isSE();
         highscores = BitmapFactory.decodeResource(getResources(),R.drawable.gamehighescores);
@@ -1056,10 +1082,6 @@ public class GameView extends View {
                             }
                             if (z != 0)
                                 first = false;
-                            if (bound) {
-                                bound = false;
-
-                            }
 
                             rotateafter = rotation;
 
@@ -1159,31 +1181,23 @@ public class GameView extends View {
             kill=false;
             Timekill=0;
             appleboolean = true;
-            firsttime = true;
             finish = false;
-            recreate = false;
             rotation = 10;
             xcoordinate = 0;
             ycoordinate = 0;
             double angle = 0;
-            timeInMilliseconds = 0;
             applecorx = (int) (fx * (random.nextInt(644) + 483));
             applecory = (int) (fy * random.nextInt(428) + 100);
             delayfinish = 0;
-            x = 5;
             Time = 1;
             z = 0;
-            check = true;
             touch = true;
             flag = false;
             up = false;
             first = true;
             settingpress = false;
-            bound = true;
             maxDegree = true;
             angleboolean = true;
-            heartFrame = 0;
-            bowFrame = 0;
             T = 1; // work
 
         }
@@ -1205,7 +1219,7 @@ public class GameView extends View {
         player.setBK(BK);
         PlayerInfo.child(key).setValue(player);
     }
-    public void updateCollection(String key ,boolean collection){
+    public void updateCollection(String key){
         final int num = arrownum;
 
         switch (num){
@@ -1229,7 +1243,7 @@ public class GameView extends View {
         PlayerInfo.child(key).setValue(player);
 
     }
-    public void updateEquiped(String key,int Equiped){
+    public void updateEquiped(String key,int Equiped){//
         player.setEquiped(Equiped);
         PlayerInfo.child(key).setValue(player);
     }

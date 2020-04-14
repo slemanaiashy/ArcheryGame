@@ -16,7 +16,7 @@ public class Player {
     protected boolean bow4;
     protected  boolean bow5;
     protected boolean SE;
-   protected boolean BK;
+    protected boolean BK;
 
     public int getEquiped() {
         return equiped;
@@ -202,5 +202,3 @@ public class Player {
         return longestCombo;
     }
 }
-
-

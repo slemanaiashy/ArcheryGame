@@ -29,7 +29,6 @@ public class StartGame extends Activity {
     GameView gameView;
     ImageButton easy,med,hard,shop,logout;
     private static final String PREFS_NAME="PrefsFile";
-    private SharedPreferences sharedPreferences;
 
 
     @Override
@@ -38,7 +37,6 @@ public class StartGame extends Activity {
         setContentView(R.layout.activity_main);
 
 
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE );
         easy = findViewById(R.id.easy);
         med = findViewById(R.id.med);
         hard = findViewById(R.id.hard);

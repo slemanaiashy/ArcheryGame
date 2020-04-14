@@ -12,7 +12,7 @@
     android:layout_alignParentStart="false"
     android:background="@drawable/background"
     android:foregroundTint="#FFFFFF"
-    tools:context=".MainActivity">
+    tools:context=".StartGame">
 
 
     <ImageButton
